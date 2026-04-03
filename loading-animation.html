@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Loading Animation</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:  #0d0d0d;
+      --red:    #e51c23;
+      --blue:   #1565c0;
+      --green:  #2e7d32;
+      --white:  #ffffff;
+      --size:   180px;
+    }
+
+    body {
+      background: var(--white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      min-height: 100vh;
+      font-family: 'Space Mono', monospace;
+      overflow: hidden;
+    }
+
+    /* ── GRID BACKGROUND ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(13,13,13,.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(13,13,13,.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    /* ── WRAPPER ── */
+    .loader-wrap {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: var(--size);
+      height: var(--size);
+    }
+
+    /* ── ORBITAL RINGS ── */
+    .ring {
+      position: absolute;
+      border-radius: 50%;
+      border: 3px solid transparent;
+    }
+
+    .ring-1 {
+      width: 100%;
+      height: 100%;
+      border-top-color: var(--black);
+      border-right-color: var(--black);
+      animation: spin 1.4s cubic-bezier(.6,0,.4,1) infinite;
+    }
+    .ring-2 {
+      width: 78%;
+      height: 78%;
+      border-bottom-color: var(--red);
+      border-left-color: var(--red);
+      animation: spin-r 1.0s cubic-bezier(.6,0,.4,1) infinite;
+    }
+    .ring-3 {
+      width: 56%;
+      height: 56%;
+      border-top-color: var(--blue);
+      border-right-color: var(--blue);
+      animation: spin 0.75s linear infinite;
+    }
+    .ring-4 {
+      width: 34%;
+      height: 34%;
+      border-bottom-color: var(--green);
+      border-left-color: var(--green);
+      animation: spin-r 0.55s linear infinite;
+    }
+
+    @keyframes spin   { to { transform: rotate(360deg);  } }
+    @keyframes spin-r { to { transform: rotate(-360deg); } }
+
+    /* ── CENTRE DOT PULSE ── */
+    .centre {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--black);
+      animation: pulse 1.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { transform: scale(1);   opacity: 1; }
+      50%      { transform: scale(1.6); opacity: .5; }
+    }
+
+    /* ── CORNER DOTS (4 colours) ── */
+    .dots {
+      position: absolute;
+      inset: -28px;
+      animation: spin 8s linear infinite;
+    }
+    .dot {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform-origin: 0 0;
+    }
+    .dot:nth-child(1) { background: var(--black); transform: rotate(0deg)   translate(118px) translate(-50%,-50%); }
+    .dot:nth-child(2) { background: var(--red);   transform: rotate(90deg)  translate(118px) translate(-50%,-50%); }
+    .dot:nth-child(3) { background: var(--blue);  transform: rotate(180deg) translate(118px) translate(-50%,-50%); }
+    .dot:nth-child(4) { background: var(--green); transform: rotate(270deg) translate(118px) translate(-50%,-50%); }
+
+    /* ── LABEL ── */
+    .label {
+      margin-top: 52px;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.35rem;
+      letter-spacing: .28em;
+      color: var(--black);
+      display: flex;
+      gap: 2px;
+    }
+    .label span {
+      display: inline-block;
+      animation: bounce 1.4s ease-in-out infinite;
+    }
+    .label span:nth-child(1)  { animation-delay:.00s; color: var(--black); }
+    .label span:nth-child(2)  { animation-delay:.07s; color: var(--black); }
+    .label span:nth-child(3)  { animation-delay:.14s; color: var(--black); }
+    .label span:nth-child(4)  { animation-delay:.21s; color: var(--black); }
+    .label span:nth-child(5)  { animation-delay:.28s; color: var(--black); }
+    .label span:nth-child(6)  { animation-delay:.35s; color: var(--black); }
+    .label span:nth-child(7)  { animation-delay:.42s; color: var(--black); }
+    .label span:nth-child(8)  { animation-delay:.49s; color: var(--black); }
+    .label span:nth-child(9)  { animation-delay:.56s; color: var(--black); }
+    .label span:nth-child(10) { animation-delay:.63s; color: var(--black); }
+
+    @keyframes bounce {
+      0%,100% { transform: translateY(0);    opacity: .4; }
+      50%      { transform: translateY(-6px); opacity: 1;  }
+    }
+
+    /* ── PROGRESS BAR ── */
+    .progress-track {
+      margin-top: 22px;
+      width: 220px;
+      height: 3px;
+      background: rgba(13,13,13,.1);
+      border-radius: 2px;
+      overflow: hidden;
+      position: relative;
+    }
+    .progress-fill {
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(90deg, var(--black), var(--red), var(--blue), var(--green));
+      background-size: 220px 100%;
+      animation: progress 2.6s ease-in-out infinite;
+    }
+    @keyframes progress {
+      0%   { width: 0%;    background-position: 0%   center; }
+      60%  { width: 100%;  background-position: 100% center; }
+      100% { width: 100%;  background-position: 100% center; opacity: 0; }
+    }
+
+    /* ── CORNER ACCENTS ── */
+    .corner {
+      position: fixed;
+      width: 44px;
+      height: 44px;
+    }
+    .corner::before,
+    .corner::after {
+      content: '';
+      position: absolute;
+      background: currentColor;
+    }
+    .corner::before { width: 100%; height: 3px; top: 0; }
+    .corner::after  { width: 3px; height: 100%; top: 0; }
+
+    .corner-tl { top: 28px; left: 28px; color: var(--black);  }
+    .corner-tr { top: 28px; right: 28px; color: var(--red);   transform: scaleX(-1); }
+    .corner-bl { bottom: 28px; left: 28px; color: var(--blue);  transform: scaleY(-1); }
+    .corner-br { bottom: 28px; right: 28px; color: var(--green); transform: scale(-1,-1); }
+
+    .corner { animation: fade-in 1s ease both; }
+    .corner-tl { animation-delay: .1s; }
+    .corner-tr { animation-delay: .2s; }
+    .corner-bl { animation-delay: .3s; }
+    .corner-br { animation-delay: .4s; }
+
+    @keyframes fade-in {
+      from { opacity: 0; transform: scale(.6); }
+      to   { opacity: 1; }
+    }
+    .corner-tr  { animation-name: fade-in-tr; }
+    .corner-bl  { animation-name: fade-in-bl; }
+    .corner-br  { animation-name: fade-in-br; }
+    @keyframes fade-in-tr { from { opacity:0; transform: scaleX(-1) scale(.6); } to { opacity:1; transform:scaleX(-1); } }
+    @keyframes fade-in-bl { from { opacity:0; transform: scaleY(-1) scale(.6); } to { opacity:1; transform:scaleY(-1); } }
+    @keyframes fade-in-br { from { opacity:0; transform: scale(-1,-1) scale(.6,-.6); } to { opacity:1; transform:scale(-1,-1); } }
+
+    /* ── PERCENTAGE COUNTER ── */
+    .pct {
+      margin-top: 12px;
+      font-size: .72rem;
+      letter-spacing: .18em;
+      color: rgba(13,13,13,.4);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Corner brackets -->
+  <div class="corner corner-tl"></div>
+  <div class="corner corner-tr"></div>
+  <div class="corner corner-bl"></div>
+  <div class="corner corner-br"></div>
+
+  <!-- Main loader -->
+  <div class="loader-wrap">
+    <!-- Outer orbiting dots -->
+    <div class="dots">
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+      <div class="dot"></div>
+    </div>
+
+    <!-- Concentric rings -->
+    <div class="ring ring-1"></div>
+    <div class="ring ring-2"></div>
+    <div class="ring ring-3"></div>
+    <div class="ring ring-4"></div>
+
+    <!-- Centre pulse -->
+    <div class="centre"></div>
+  </div>
+
+  <!-- Animated text -->
+  <div class="label" id="label"></div>
+
+  <!-- Progress bar -->
+  <div class="progress-track">
+    <div class="progress-fill"></div>
+  </div>
+
+  <!-- Counter -->
+  <div class="pct" id="pct">0%</div>
+
+  <script>
+    /* --- Bouncing letter label --- */
+    const word = 'LOADING...';
+    const labelEl = document.getElementById('label');
+    [...word].forEach(ch => {
+      const s = document.createElement('span');
+      s.textContent = ch === ' ' ? '\u00a0' : ch;
+      labelEl.appendChild(s);
+    });
+
+    /* --- Percentage counter --- */
+    const pctEl = document.getElementById('pct');
+    let pct = 0;
+    const CYCLE = 2600; // ms — matches CSS progress animation
+    let start = null;
+
+    function animatePct(ts) {
+      if (!start) start = ts;
+      const elapsed = (ts - start) % CYCLE;
+      // ease-in-out curve
+      const t = elapsed / CYCLE;
+      const eased = t < .5 ? 2*t*t : -1+(4-2*t)*t;
+      pct = Math.round(eased * 100);
+      pctEl.textContent = pct + '%';
+      requestAnimationFrame(animatePct);
+    }
+    requestAnimationFrame(animatePct);
+  </script>
+</body>
+</html>

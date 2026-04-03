@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcane Submarine Voyage</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --color1: #306D85;
+            --color2: #D93A54;
+            --bg-deep: #0a192f;
+            --water-accent: #112240;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            position: relative;
+        }
+
+        /* Deep Sea Light Rays */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: 50%;
+            width: 200%;
+            height: 200%;
+            background: repeating-conic-gradient(from 0deg, transparent 0deg, rgba(48, 109, 133, 0.05) 10deg, transparent 20deg);
+            animation: rays-rotate 60s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes rays-rotate {
+            from { transform: translate(-50%, 0) rotate(0deg); }
+            to { transform: translate(-50%, 0) rotate(360deg); }
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            padding: 10px 20px;
+            background: var(--color2);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 200;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(217, 58, 84, 0.4);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 58, 84, 0.6);
+            filter: brightness(1.1);
+        }
+
+        .sea {
+            position: relative;
+            z-index: 10;
+        }
+
+        .circle-wrapper {
+            position: relative;
+            background: linear-gradient(180deg, #2c5e72 0%, #173b4d 100%);
+            width: 350px;
+            height: 350px;
+            border-radius: 50%;
+            border: 8px solid #3c829e;
+            overflow: hidden;
+            box-shadow: 0 0 50px rgba(0,0,0,0.5), inset 0 0 50px rgba(0,0,0,0.4);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .bubble {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            animation: bubble-move 4s ease-in infinite;
+        }
+
+        .bubble::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            top: -20px;
+            left: 40px;
+        }
+
+        @keyframes bubble-move {
+            0% { transform: translate(150px, 200px) scale(0.5); opacity: 0; }
+            20% { opacity: 0.5; }
+            100% { transform: translate(-200px, -200px) scale(1.5); opacity: 0; }
+        }
+
+        .submarine-wrapper {
+            height: 300px;
+            width: 300px;
+            position: relative;
+            animation: diving 4s ease-in-out infinite, diving-rotate 4s ease-in-out infinite;
+        }
+
+        .submarine-body {
+            width: 160px;
+            height: 90px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: linear-gradient(180deg, var(--color2) 0%, #a0283b 100%);
+            border-radius: 50px;
+            box-shadow: inset 0 5px 15px rgba(255,255,255,0.2);
+        }
+
+        .light {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-style: solid;
+            border-width: 0 40px 180px 40px;
+            border-color: transparent transparent rgba(255, 255, 255, 0.1) transparent;
+            transform: rotate(-60deg);
+            top: 40px;
+            left: 90%;
+            filter: blur(2px);
+            pointer-events: none;
+        }
+
+        .window {
+            width: 45px;
+            height: 45px;
+            position: absolute;
+            top: 22px;
+            right: 25px;
+            background: linear-gradient(135deg, #1e3a4a 0%, #0f1c24 100%);
+            border-radius: 50%;
+            border: 4px solid var(--color2);
+            box-shadow: 0 0 15px rgba(0,0,0,0.3);
+        }
+
+        .window::after {
+            content: "";
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            border-top: 3px solid rgba(255,255,255,0.4);
+            transform: rotate(-45deg);
+        }
+
+        .engine {
+            width: 35px;
+            height: 35px;
+            position: absolute;
+            top: 27px;
+            left: 55px;
+            background-color: #8c2434;
+            border-radius: 50%;
+            border: 4px solid var(--color2);
+        }
+
+        .engine::after, .engine::before {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 2px;
+            animation: spin 1s linear infinite;
+        }
+
+        .engine::after { top: 13px; left: 4px; width: 20px; height: 3px; }
+        .engine::before { top: 4px; left: 13px; width: 3px; height: 20px; }
+
+        .helix {
+            width: 25px;
+            height: 80px;
+            position: absolute;
+            top: 110px;
+            left: 50px;
+            background: linear-gradient(180deg, var(--color2), #8c2434);
+            border-radius: 10px;
+        }
+
+        .helix::after {
+            content: "";
+            position: absolute;
+            width: 15px;
+            height: 70px;
+            left: 5px;
+            top: 5px;
+            background: linear-gradient(to bottom, var(--color2) 50%, #f1697e 50%);
+            background-size: 100% 20px;
+            animation: helix-movement 0.15s linear infinite;
+            opacity: 0.8;
+            border-radius: 5px;
+        }
+
+        .hat {
+            width: 70px;
+            height: 30px;
+            position: absolute;
+            top: 105px;
+            left: 115px;
+            background: linear-gradient(180deg, var(--color2), #bc3248);
+            border-radius: 15px 15px 0 0;
+        }
+
+        .periscope {
+            position: absolute;
+            width: 8px;
+            height: 30px;
+            background-color: var(--color2);
+            top: -25px;
+            left: 31px;
+            border-radius: 5px 5px 0 0;
+        }
+
+        .periscope::after {
+            content: "";
+            position: absolute;
+            width: 18px;
+            height: 8px;
+            background-color: var(--color2);
+            top: 0;
+            left: 0;
+            border-radius: 5px;
+        }
+
+        .leds-wrapper {
+            width: 50px;
+            height: 15px;
+            position: absolute;
+            top: 8px;
+            left: 10px;
+            background: #7d1f2e;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-around;
+            padding: 0 5px;
+        }
+
+        .leds {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: white;
+            box-shadow: 0 0 8px white;
+            animation: leds-off 0.6s infinite alternate;
+        }
+
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+        @keyframes leds-off { 0% { opacity: 1; } 100% { opacity: 0.3; } }
+        @keyframes helix-movement { 100% { background-position: 0 20px; } }
+        @keyframes diving {
+            0%, 100% { transform: translateY(-5px); }
+            50% { transform: translateY(5px); }
+        }
+        @keyframes diving-rotate {
+            0%, 100% { transform: rotate(0deg); }
+            50% { transform: rotate(4deg); }
+            75% { transform: rotate(-2deg); }
+        }
+
+        .noise {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100;
+            opacity: 0.03;
+            pointer-events: none;
+            background-image: url(data:image/png;base64,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);
+        }
+
+        #ajerez {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 100;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+
+        #ajerez:hover { opacity: 1; }
+        #ajerez img { width: 40px; }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Hub</a>
+
+    <div class="sea">
+        <div class="circle-wrapper">
+            <div class="bubble"></div>
+            <div class="submarine-wrapper">
+                <div class="submarine-body">
+                    <div class="window"></div>
+                    <div class="engine"></div>
+                    <div class="light"></div>
+                </div>
+                <div class="helix"></div>
+                <div class="hat">
+                    <div class="periscope"></div>
+                    <div class="leds-wrapper">
+                        <div class="leds"></div>
+                        <div class="leds"></div>
+                        <div class="leds"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <a id="ajerez" href="http://www.ajerez.es/en/" target="_blank">
+        <img src="https://i.imgur.com/AI4BS2I.png" alt="ajerez"/>
+    </a>
+
+    <div class="noise"></div>
+</body>
+</html>

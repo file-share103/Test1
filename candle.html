@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcane Candle Duo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #0a0e14;
+            --candle-white: #ffffff;
+            --purple-acc: #673C63;
+            --eye-color: #673C63;
+            --fire-core: #FFC107;
+            --fire-outer: #FF9800;
+            --shadow: rgba(0, 0, 0, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            width: 100vw;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Inter', sans-serif;
+            animation: change-background 3s infinite linear;
+        }
+
+        @keyframes change-background {
+            0%, 59%, 98%, 100% { background: #fafafa; }
+            61%, 97% { background: #0d1117; }
+        }
+
+        .wrapper {
+            position: absolute;
+            left: 50%;
+            top: 60%;
+            transform: scale(1.8) translate(-50%, -50%);
+            z-index: 10;
+        }
+
+        .floor {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 350px;
+            height: 5px;
+            background: var(--purple-acc);
+            transform: translate(-50%, -50%);
+            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
+            z-index: 2;
+            border-radius: 10px;
+        }
+
+        .candles {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 250px;
+            height: 150px;
+            transform: translate(-50%, -100%);
+            z-index: 1;
+        }
+
+        .candle1 {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 35px;
+            height: 100px;
+            background: var(--candle-white);
+            border: 3px solid var(--purple-acc);
+            border-bottom: 0px;
+            border-radius: 4px;
+            transform-origin: center right;
+            transform: translate(60%, -25%);
+            box-shadow: -3px 0px 0px #e0f2fe inset;
+            animation: expand-body 3s infinite linear;
+        }
+
+        .candle1__stick, .candle2__stick {
+            position: absolute;
+            left: 50%;
+            top: 0%;
+            width: 3px;
+            height: 15px;
+            background: var(--purple-acc);
+            border-radius: 8px;
+            transform: translate(-50%, -100%);
+        }
+
+        .candle2__stick {
+            height: 12px;
+            transform-origin: bottom center;
+            animation: stick-animation 3s infinite linear;
+        }
+
+        .candle1__eyes, .candle2__eyes {
+            position: absolute;
+            left: 50%;
+            top: 15%;
+            width: 35px;
+            height: 30px;
+            transform: translate(-50%, 0%);
+        }
+
+        .candle1__eyes-one, .candle1__eyes-two {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--eye-color);
+            animation: blink-eyes 3s infinite linear;
+        }
+
+        .candle1__eyes-one { left: 30%; top: 20%; transform: translate(-70%, 0%); }
+        .candle1__eyes-two { left: 70%; top: 20%; transform: translate(-70%, 0%); }
+
+        .candle1__mouth {
+            position: absolute;
+            left: 40%;
+            top: 25%;
+            width: 0px;
+            height: 0px;
+            border-radius: 20px;
+            background: var(--purple-acc);
+            transform: translate(-50%, -50%);
+            animation: uff 3s infinite linear;
+        }
+
+        .candle__smoke-one {
+            position: absolute;
+            left: 30%;
+            top: 50%;
+            width: 30px;
+            height: 3px;
+            background: rgba(128,128,128,0.4);
+            border-radius: 10px;
+            transform: translate(-50%, -50%);
+            animation: move-left 3s infinite linear;
+        }
+
+        .candle__smoke-two {
+            position: absolute;
+            left: 30%;
+            top: 40%;
+            width: 10px;
+            height: 10px;
+            border-radius: 10px;
+            background: rgba(128,128,128,0.4);
+            transform: translate(-50%, -50%);
+            animation: move-top 3s infinite linear;
+        }
+
+        .candle2 {
+            position: absolute;
+            left: 20%;
+            top: 65%;
+            width: 42px;
+            height: 60px;
+            background: var(--candle-white);
+            border: 3px solid var(--purple-acc);
+            border-bottom: 0px;
+            border-radius: 4px;
+            transform: translate(60%, -15%);
+            transform-origin: center right;
+            box-shadow: -3px 0px 0px #e0f2fe inset;
+            animation: shake-left 3s infinite linear;
+        }
+
+        .candle2__body { height: 100%; position: relative; }
+
+        .candle2__eyes-one, .candle2__eyes-two {
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: var(--eye-color);
+        }
+
+        .candle2__eyes-one { left: 30%; top: 50%; transform: translate(-80%, 0%); animation: changeto-lower 3s infinite linear; }
+        .candle2__eyes-two { left: 70%; top: 50%; transform: translate(-80%, 0%); animation: changeto-greater 3s infinite linear; }
+
+        .light__wave {
+            position: absolute;
+            top: 35%;
+            left: 35%;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            z-index: 0;
+            transform: translate(-25%, -50%) scale(2.5, 2.5);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            animation: expand-light 3s infinite linear;
+            pointer-events: none;
+        }
+
+        .candle2__fire {
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            width: 16px;
+            height: 22px;
+            background: var(--fire-outer);
+            border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+            transform: translate(-50%, -50%);
+            animation: dance-fire 3s infinite linear;
+            box-shadow: 0 0 20px var(--fire-outer);
+        }
+
+        /* Animations */
+        @keyframes blink-eyes {
+            0%,35% { opacity: 1; transform: translate(-70%, 0%); }
+            36%,39% { opacity: 0; transform: translate(-70%, 0%); }
+            40% { opacity: 1; transform: translate(-70%, 0%); }
+            50%,65% { transform: translate(-140%, 0%); }
+            66% { transform: translate(-70%, 0%); }
+        }
+
+        @keyframes expand-body {
+            0%,40% { transform: scale(1, 1) translate(60%, -25%); }
+            45%,55% { transform: scale(1.1, 1.1) translate(60%, -28%); }
+            60% { transform: scale(0.89, 0.89) translate(60%, -25%); }
+            65% { transform: scale(1, 1) translate(60%, -25%); }
+            70% { transform: scale(0.95, 0.95) translate(60%, -25%); }
+            75% { transform: scale(1, 1) translate(60%, -25%); }
+        }
+
+        @keyframes uff {
+            0%,40% { width: 0px; height: 0px; opacity: 0; }
+            50%,54% { width: 15px; height: 15px; left: 30%; opacity: 1; }
+            59% { width: 5px; height: 5px; left: 20%; }
+            62% { width: 2px; height: 2px; left: 20%; }
+            67% { width: 0px; height: 0px; left: 30%; opacity: 0; }
+        }
+
+        @keyframes move-left {
+            0%,59%,100% { width: 0px; left: 40%; opacity: 0; }
+            60% { width: 30px; left: 34%; opacity: 1; }
+            68% { width: 0px; left: 20%; opacity: 0; }
+        }
+
+        @keyframes move-top {
+            0%,64%,100% { width: 0px; height: 0px; top: 0%; opacity: 0; }
+            65% { width: 10px; height: 10px; top: 40%; left: 40%; opacity: 1; }
+            80% { width: 0px; height: 0px; top: 20%; opacity: 0; }
+        }
+
+        @keyframes shake-left {
+            0%,40% { left: 20%; transform: translate(60%, -15%); }
+            50%,54% { left: 20%; transform: translate(60%, -15%); }
+            59% { left: 20%; transform: translate(60%, -15%); }
+            62% { left: 18%; transform: translate(60%, -15%); }
+            65% { left: 21%; transform: translate(60%, -15%); }
+            67% { left: 20%; transform: translate(60%, -15%); }
+            75% { left: 20%; transform: scale(1.15, 0.85) translate(60%, -15%); }
+            91% { left: 20%; transform: scale(1.18, 0.82) translate(60%, -10%); background: #F44336; border-color: #F44336; box-shadow: -2px 0px 0px #F44336 inset; }
+            92% { left: 20%; transform: scale(0.85, 1.15) translate(60%, -15%); }
+            95% { left: 20%; transform: scale(1.05, 0.95) translate(60%, -15%); }
+            97% { left: 20%; transform: scale(1, 1) translate(60%, -15%); }
+        }
+
+        @keyframes stick-animation {
+            0%,40% { left: 50%; top: 0%; transform: translate(-50%, -100%); }
+            62% { left: 50%; top: 0%; transform: rotateZ(-15deg) translate(-50%, -100%); }
+            65% { left: 50%; top: 0%; transform: rotateZ(15deg) translate(-50%, -100%); }
+            70% { left: 50%; top: 0%; transform: rotateZ(-5deg) translate(-50%, -100%); }
+            72% { left: 50%; top: 0%; transform: rotateZ(5deg) translate(-50%, -100%); }
+            85% { transform: rotateZ(180deg) translate(0%, 120%); }
+            92% { left: 50%; top: 0%; transform: translate(-50%, -100%); }
+        }
+
+        @keyframes expand-light {
+            10%,29%,59%,89% { transform: translate(-25%, -50%) scale(0); border: 2px solid rgba(255, 255, 255, 0); }
+            90%,20%,50% { transform: translate(-25%, -50%) scale(1); }
+            95%,96%,26%,27%,56%,57% { transform: translate(-25%, -50%) scale(2); border: 2px solid rgba(255, 255, 255, 0.3); }
+            0%,28%,58%,100% { transform: translate(-25%, -50%) scale(2.5); border: 2px solid rgba(255, 255, 255, 0.1); }
+        }
+
+        @keyframes dance-fire {
+            59%,89% { left: 40%; width: 0px; height: 0px; opacity: 0; }
+            90%,0%,7%,15%,23%,31%,39%,47%,55% { left: 40.8%; width: 16px; height: 20px; background: var(--fire-core); opacity: 1; }
+            94%,3%,11%,19%,27%,35%,43%,51%,58% { left: 41.2%; width: 16px; height: 20px; background: var(--fire-outer); }
+        }
+
+        @keyframes changeto-lower {
+            0%,70%,90% { background: var(--eye-color); border: 0; transform: translate(-90%, 0%); border-radius: 50%; }
+            71%,89% { background: none; border: solid var(--purple-acc); border-width: 0 2px 2px 0; padding: 2px; transform: rotate(-45deg) translate(-50%, -65%); border-radius: 0; }
+        }
+
+        @keyframes changeto-greater {
+            0%,70%,90% { background: var(--eye-color); border: 0; transform: translate(-80%, 0%); border-radius: 50%; }
+            71%,89% { background: none; border: solid var(--purple-acc); border-width: 0 2px 2px 0; padding: 2px; transform: rotate(135deg) translate(-80%, 20%); border-radius: 0; }
+        }
+
+        /* Premium Overlay */
+        .noise {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: 100;
+            opacity: 0.04;
+            pointer-events: none;
+            background-image: url(data:image/png;base64,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);
+        }
+
+        .back-btn {
+            position: absolute;
+            top: 20px; left: 20px;
+            padding: 10px 20px;
+            background: var(--purple-acc);
+            color: white;
+            text-decoration: none;
+            border-radius: 30px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            z-index: 200;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(103, 60, 99, 0.4);
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(103, 60, 99, 0.6);
+            background: #8e548a;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="back-btn">← Back to Hub</a>
+
+    <div class="wrapper">
+        <div class="candles">
+            <div class="light__wave"></div>
+            <div class="candle1">
+                <div class="candle1__body">
+                    <div class="candle1__eyes">
+                        <span class="candle1__eyes-one"></span>
+                        <span class="candle1__eyes-two"></span>
+                    </div>
+                    <div class="candle1__mouth"></div>
+                </div>
+                <div class="candle1__stick"></div>
+            </div>
+            
+            <div class="candle2">
+                <div class="candle2__body">
+                    <div class="candle2__eyes">
+                        <div class="candle2__eyes-one"></div>
+                        <div class="candle2__eyes-two"></div>
+                    </div>
+                </div>
+                <div class="candle2__stick"></div>
+            </div>
+            <div class="candle2__fire"></div>
+            <div class="candle__smoke-one"></div>
+            <div class="candle__smoke-two"></div>
+        </div>
+        <div class="floor"></div>
+    </div>
+
+    <div class="noise"></div>
+</body>
+</html>
